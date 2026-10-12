@@ -11,7 +11,7 @@
 python3 -m http.server 8000
 ```
 
-浏览器访问 http://localhost:8000/。不要以 file:// 协议直接打开 index.html，浏览器会阻止着色器脚本加载。
+浏览器访问 http://localhost:8000/
 
 线上地址：https://13051300305.github.io/ap1-sierpinski/ap1-sierpinski/
 
