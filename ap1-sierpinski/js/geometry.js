@@ -1,12 +1,8 @@
-// geometry.js —— 几何生成：混沌游戏 + 递归细分 + 配色方案
-// 对应教材 2.1（混沌游戏）与 2.x（递归细分 divideTriangle）
-
 "use strict";
 
-// 大三角形三个顶点（教材 2.1 节原例，clip 坐标）
 var TRIANGLE = [vec2(-1.0, -1.0), vec2(0.0, 1.0), vec2(1.0, -1.0)];
 
-// ---------- 扩展 E1：生成正 n 边形顶点（n≥4，半径 1.0） ----------
+// 生成正 n 边形顶点（n≥4，半径 1.0）
 function polygonVertices(n) {
   var vs = [];
   for (var i = 0; i < n; i++) {
@@ -16,9 +12,9 @@ function polygonVertices(n) {
   return vs;
 }
 
-// ---------- 方法一：混沌游戏（Chaos Game） ----------
-// 初始点取质心（一定在图形内），反复 p = (p + 随机顶点)/2
-// n 为多边形边数：3 用教材原三角形，≥4 用正 n 边形（E1 扩展）
+// 方法一：混沌游戏
+// 初始点取质心，反复 p = (p + 随机顶点)/2
+// n 为多边形边数：3 用教材原三角形，≥4 用正 n 边形
 function generateChaosPoints(count, n) {
   var verts = (n === 3) ? TRIANGLE : polygonVertices(n);
   var p = vec2(0.0, 0.0); // 质心，保证落在图形内
@@ -31,7 +27,7 @@ function generateChaosPoints(count, n) {
   return pts;
 }
 
-// ---------- 方法二：递归细分（教材 divideTriangle） ----------
+// 方法二：递归细分
 // 返回三角形数组，每个三角形是 [a, b, c] 三个 vec2
 function generateSubdivisionTriangles(depth) {
   var tris = [];
@@ -49,7 +45,7 @@ function generateSubdivisionTriangles(depth) {
   return tris;
 }
 
-// ---------- 把三角形数组按渲染模式拍平成顶点列表 ----------
+// 把三角形数组按渲染模式拍平成顶点列表
 // POINTS：每个三角形的 3 个顶点当点画
 // LINES ：每个三角形输出 3 条边（a-b, b-c, c-a）= 6 个顶点
 // TRIANGLES：每个三角形 3 个顶点直接填充
@@ -66,7 +62,7 @@ function trianglesToVertices(tris, mode) {
   return out;
 }
 
-// ---------- 三套配色方案 ----------
+// 三套配色方案
 // 根据顶点坐标返回颜色 vec3；方案切换只在 JS 侧改，不动着色器
 function colorFor(pt, scheme) {
   var x = pt[0], y = pt[1];
@@ -83,7 +79,6 @@ function colorFor(pt, scheme) {
   }
 }
 
-// 把顶点列表 + 配色方案 → 位置 Float32Array 与 颜色 Float32Array
 function buildBuffers(vertices, scheme) {
   var positions = [];
   var colors = [];
