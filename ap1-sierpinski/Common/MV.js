@@ -3,7 +3,7 @@ function vec3(x, y, z) { return [x, y, z]; }
 function vec4(x, y, z, w) { return [x, y, z, w]; }
 
 function mix(u, a, b) {
-  if (b === undefined) { // 兼容 mix(a,b,0.5)
+  if (b === undefined) { 
     b = a; a = u; u = 0.5;
   }
   var n = a.length;
